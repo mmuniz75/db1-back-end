@@ -19,23 +19,7 @@ public class Db1BackEndApplication {
 	@CrossOrigin
 	@RequestMapping(value="/checkPassword/{password}",method=RequestMethod.GET)
 	public Integer passwordMeter(@PathVariable String password){
-		if(password==null)
-			return 0;
-		
-		 switch(password.length()) {
-         case 1 :
-             return 19;
-         case 2:
-             return 39;
-         case 3:
-             return 61;       
-         case 4:
-             return 81;    
-         case 5:
-             return 100;
-         default:
-             return 0;
-     }   
-		
+		//return PasswordMeter.scorePasswordDummy(password);
+		return PasswordMeter.scorePassword(password);
 	}
 }
