@@ -74,22 +74,22 @@ public class PasswordMeter {
 	
 	private static List<String> buildCheckVector(String password){
 		String[] checkVector = new String[]{
-												checkNumberOfCharacters(password),
-												checkUppercaseLetters(password),
-												checkLowercaseLetters(password),
-												checkNumbers(password),
-												checkSymbols(password),
-												checkMiddleNumbersOrSymbols(password),
-												checkRequirements(password),
-												checkLettersOnly(password),
-												checkNumbersOnly(password),
-												checkRepeatCharacters(password),
-												checkConsecutiveUppercaseLetters(password),
-												checkConsecutiveLowercaseLetters(password),
-												checkConsecutiveNumbers(password),
-												checkSequentialLetters(password),
-												checkSequentialNumbers(password),
-												checkSequentialSymbols(password)
+												checkScore(password,Score.NUMBEROFCHARACTERS),
+												checkScore(password,Score.UPPERCASELETTERS),
+												checkScore(password,Score.LOWERCASELETTERS),
+												checkScore(password,Score.NUMBERS),
+												checkScore(password,Score.SYMBOLS),
+												checkScore(password,Score.MIDDLENUMBERSORSYMBOLS),
+												checkScore(password,Score.REQUIREMENTS),
+												checkScore(password,Score.LETTERSONLY),
+												checkScore(password,Score.NUMBERSONLY),
+												checkScore(password,Score.REPEATCHARACTERS),
+												checkScore(password,Score.CONSECUTIVEUPPERCASELETTERS),
+												checkScore(password,Score.CONSECUTIVELOWERCASE),
+												checkScore(password,Score.CONSECUTIVENUMBERS),
+												checkScore(password,Score.SEQUENTIALLETTERS),
+												checkScore(password,Score.SEQUENTIALNUMBERS),
+												checkScore(password,Score.SEQUENTIALSYMBOLS)
 											 };
 		
 		List<String> scores = new ArrayList<>(Arrays.asList(checkVector));
@@ -99,216 +99,142 @@ public class PasswordMeter {
 	}
 	
 	
-	private static String checkNumberOfCharacters(String password){
+	private static String checkScore(String password,Score scoreType){
 		String rate = "";
-		boolean test =  true;
+		int occur = 0;
 		
-		int occur = 1;
+		switch(scoreType){
+			case NUMBEROFCHARACTERS:
+				occur = checkNumberOfCharacters(password);
+				break;
+			case UPPERCASELETTERS:
+				occur = checkUppercaseLetters(password);
+				break;
+			case LOWERCASELETTERS:
+				occur = checkLowercaseLetters(password);
+				break;
+			case NUMBERS:
+				occur = checkNumbers(password);
+				break;
+			case SYMBOLS:
+				occur = checkSymbols(password);
+				break;
+			case MIDDLENUMBERSORSYMBOLS:
+				occur = checkMiddleNumbersOrSymbols(password);
+				break;
+			case REQUIREMENTS:
+				occur = checkRequirements(password);
+				break;
+			case LETTERSONLY:
+				occur = checkLettersOnly(password);
+				break;
+			case NUMBERSONLY:
+				occur = checkNumbersOnly(password);
+				break;
+			case REPEATCHARACTERS:
+				occur = checkRepeatCharacters(password);
+				break;
+			case CONSECUTIVEUPPERCASELETTERS:
+				occur = checkConsecutiveUppercaseLetters(password);
+				break;
+			case CONSECUTIVELOWERCASE:
+				occur = checkConsecutiveLowercaseLetters(password);
+				break;
+			case CONSECUTIVENUMBERS:
+				occur = checkConsecutiveNumbers(password);
+				break;
+			case SEQUENTIALLETTERS:
+				occur = checkSequentialLetters(password);
+				break;
+			case SEQUENTIALNUMBERS:
+				occur = checkSequentialNumbers(password);
+				break;
+			case SEQUENTIALSYMBOLS:
+				occur = checkSequentialSymbols(password);
+				break;
+		}
 		
-		if(test) {		
-			rate = rates.get(Score.NUMBEROFCHARACTERS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
+		if(occur > 0) {		
+			rate = rates.get(scoreType);
+			if(rate.indexOf("len")>0){
+				int calc = password.length() - occur;
+				rate = rate.replaceAll("len-n", Integer.toBinaryString(calc));
+			}else
+				rate = rate.replaceAll("n", Integer.toString(occur));
 		}	
 		
 		return rate;
 	}
-	private static String checkUppercaseLetters(String password){
-		String rate = "";
-		boolean test =  true;
-		
-		int occur = 1;
-		
-		if(test) {		
-			rate = rates.get(Score.UPPERCASELETTERS);
-			int calc = password.length()-occur;
-			rate = rate.replaceAll("len-n", Integer.toString(calc));
-			
-		}	
-		
-		return rate;
-	}
-	private static String checkLowercaseLetters(String password){
-		String rate = "";
-		boolean test =  true;
-		
-		int occur = 1;
-		
-		if(test){		
-			rate = rates.get(Score.UPPERCASELETTERS);
-			int calc = password.length()-occur;
-			rate = rate.replaceAll("len-n", Integer.toString(calc));
-			
-		}	
-		return rate;
-	}
-	private static String checkNumbers(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){		
-			rate = rates.get(Score.NUMBERS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-		
-		
-		return rate;
-	}
-	private static String checkSymbols(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){		
-			rate = rates.get(Score.SYMBOLS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
 	
-		
-		return rate;
-	}
-	private static String checkMiddleNumbersOrSymbols(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.MIDDLENUMBERSORSYMBOLS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
 	
-		
-		return rate;
-	}
-	private static String checkRequirements(String password){
-		String rate = "";
-		boolean test =  true;
+	//Additions
+	private static int checkNumberOfCharacters(String password){
 		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.REQUIREMENTS); 
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-			
-		
-		return rate;
+		return occur;
 	}
-	private static String checkLettersOnly(String password){
-		String rate = "";
-		boolean test =  true;
+	private static int checkUppercaseLetters(String password){
 		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.LETTERSONLY); 
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
+		return occur;
+	}
+	private static int checkLowercaseLetters(String password){
+		int occur = 1;
+		return occur;
+	}
+	private static int checkNumbers(String password){
+		int occur = 1;
+		return occur;
+	}
+	private static int checkSymbols(String password){
+		int occur = 1;
+		return occur;
+	}
+	private static int checkMiddleNumbersOrSymbols(String password){
+		int occur = 1;
+		return occur;
+	}
+	private static int checkRequirements(String password){
+		int occur = 1;
+		return occur;
+	}
 	
-		
-		return rate;
-	}
-	private static String checkNumbersOnly(String password){
-		String rate = "";
-		boolean test =  true;
+	//Deductions
+	private static int checkLettersOnly(String password){
 		int occur = 1;
-		
-		if(test){	
-			rate = rates.get(Score.NUMBERSONLY);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		
-		return rate;
+		return occur;
+	}
+	private static int checkNumbersOnly(String password){
+		int occur = 1;
+		return occur;
 	}
 	
 	// source not avaliable
-	private static String checkRepeatCharacters(String password){
-		String rate = "";
-		boolean test =  false;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.REPEATCHARACTERS); 
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		
-		return rate;
+	private static int checkRepeatCharacters(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkConsecutiveUppercaseLetters(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){		
-			rate = rates.get(Score.CONSECUTIVEUPPERCASELETTERS); 	
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		
-		return rate;
+	private static int checkConsecutiveUppercaseLetters(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkConsecutiveLowercaseLetters(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.CONSECUTIVELOWERCASE); 
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-			
-		
-		return rate;
+	private static int checkConsecutiveLowercaseLetters(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkConsecutiveNumbers(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.CONSECUTIVENUMBERS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		
-		return rate;
+	private static int checkConsecutiveNumbers(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkSequentialLetters(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.SEQUENTIALLETTERS); 	
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-			
-		return rate;
+	private static int checkSequentialLetters(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkSequentialNumbers(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){			
-			rate = rates.get(Score.SEQUENTIALNUMBERS); 	
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		return rate;
+	private static int checkSequentialNumbers(String password){
+		int occur = 0;
+		return occur;
 	}
-	private static String checkSequentialSymbols(String password){
-		String rate = "";
-		boolean test =  true;
-		int occur = 1;
-		
-		if(test){		
-			rate = rates.get(Score.SEQUENTIALSYMBOLS);
-			rate = rate.replaceAll("n", Integer.toString(occur));
-		}	
-	
-		
-		return rate;
+	private static int checkSequentialSymbols(String password){
+		int occur = 0;
+		return occur;
 	}
 	
 	

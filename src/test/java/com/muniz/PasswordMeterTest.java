@@ -9,7 +9,7 @@ public class PasswordMeterTest {
 	@Test
 	public void testCheckNumberOfCharacters() {
 		
-		assertEquals(100,PasswordMeter.scorePassword("21"));
+		assertEquals(100,PasswordMeter.scorePassword("123456"));
 	}
 
 }
