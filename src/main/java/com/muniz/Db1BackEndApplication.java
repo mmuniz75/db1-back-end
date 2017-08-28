@@ -15,16 +15,7 @@ public class Db1BackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Db1BackEndApplication.class, args);
 	}
-	
-	/*
-	@CrossOrigin
-	@RequestMapping(value="/checkPassword/{password}",method=RequestMethod.GET)
-	public Integer passwordMeter(@PathVariable String password){
-		PasswordMeter passwordMeter = new PasswordMeter();
-		//return passwordMeter.scorePasswordDummy(password);
-		return passwordMeter.scorePassword(password);
-	}
-	*/
+		
 	
 	@CrossOrigin
 	@RequestMapping(value="/checkPassword",method=RequestMethod.POST)
