@@ -46,7 +46,7 @@ public class PasswordMeterTest {
 	
 	@Test
 	public void testCheckLettersOnly2() {
-		assertEquals(22,new PasswordMeter().scorePassword("abcdefghi"));
+		assertEquals(0,new PasswordMeter().scorePassword("abcdefghi"));
 	}
 		
 	@Test
