@@ -253,7 +253,7 @@ public class PasswordMeter {
 		if(hasUpperLetters)
 			occur++;
 				
-		return occur;
+		return occur>=4?occur:0;
 	}
 	
 	//Deductions
@@ -325,6 +325,7 @@ public class PasswordMeter {
 			if(Character.isLetter(c) && Character.isLetter(c2) && Character.isLetter(c3)){
 				if (c-1 == c2 && c-2 == c3)
 					occur++;
+					
 			}	
 		}
 		
@@ -355,6 +356,7 @@ public class PasswordMeter {
 			if(!Character.isLetterOrDigit(c) && !Character.isLetterOrDigit(c2) && !Character.isLetterOrDigit(c3)){
 				if (c-1 == c2 && c-2 == c3)
 					occur++;
+	
 			}	
 		}
 		

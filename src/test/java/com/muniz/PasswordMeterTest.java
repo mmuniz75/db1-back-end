@@ -11,41 +11,49 @@ public class PasswordMeterTest {
 		assertEquals(7,new PasswordMeter().scorePassword("qwert"));
 	}
 	
+	
 	@Test
 	public void testCheckUppercaseLetters() {
 		assertEquals(25,new PasswordMeter().scorePassword("QwErT"));
 	}
-	
+
 	@Test
 	public void testCheckLowercaseLetters() {
 		assertEquals(25,new PasswordMeter().scorePassword("QwErT"));
 	}
-	
+		
 	@Test
 	public void testCheckNumbers() {
 		assertEquals(80,new PasswordMeter().scorePassword("Qw2E6r7T"));
 	}
-
+	
 	@Test
 	public void testCheckcheckSymbols() {
 		assertEquals(100,new PasswordMeter().scorePassword("Q!w#2E%6r*7T"));
 	}
-	
+
+		
 	@Test
 	public void testCheckRequirements() {
 		assertEquals(92,new PasswordMeter().scorePassword("qA1!gT4%"));
 	}
+		
 	
 	@Test
 	public void testCheckLettersOnly() {
-		assertEquals(0,new PasswordMeter().scorePassword("aaaaAAAA"));
+		assertEquals(22,new PasswordMeter().scorePassword("abcdABCD"));
 	}
 	
+	@Test
+	public void testCheckLettersOnly2() {
+		assertEquals(22,new PasswordMeter().scorePassword("abcdefghi"));
+	}
+		
 	@Test
 	public void testCheckNumbersOnly() {
 		assertEquals(4,new PasswordMeter().scorePassword("123456789"));
 	}
-	
+		
 	@Test
 	public void testMiddleNumbersOrSymbols() {
 		assertEquals(89,new PasswordMeter().scorePassword("1ds2d22##d"));
@@ -80,5 +88,6 @@ public class PasswordMeterTest {
 	public void testSequentialSymbols() {
 		assertEquals(85,new PasswordMeter().scorePassword("#$%*&*(#"));
 	}
+	
 	
 }
